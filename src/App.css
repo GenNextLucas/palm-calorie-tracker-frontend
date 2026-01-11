@@ -1,0 +1,355 @@
+body {
+  display: flex;
+  justify-content: center;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #e9ecf0;
+  min-height: 100vh;
+  padding-top: 50px;
+}
+
+
+.page-container {
+  max-width: 550px; /* Optimal width for readability */
+  width: 100%;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08); /* Subtle shadow for depth */
+  border-radius: 12px;
+  padding: 25px;
+  background-color: #ffffff; 
+  box-sizing: border-box;
+}
+
+.food-page-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 30px;
+  max-width: 1200px; /* Optimal width for readability */
+  width: 100%;
+  padding: 25px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+h1, h2, h3 {
+  text-align: center;
+  color: #333;
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+}
+
+
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 12px 10px;
+  margin-bottom: 15px;
+  border: 1px solid #e0e0e0; /* Light gray border */
+  border-radius: 8px; /* Soft edges */
+  box-sizing: border-box;
+  font-size: 1rem;
+  color: #333;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+select:focus {
+  border-color: #007bff; /* Blue focus border */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1); /* Subtle focus glow */
+  outline: none;
+}
+
+.meal-form {
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  background-color: #f9fbfd;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.meal-form select,
+.meal-form input[type="number"] {
+  flex-grow: 1; 
+  margin-bottom: 0; /* Remove bottom margin here since flex gap handles spacing */
+}
+
+.meal-form input[type="text"] {
+  flex-grow: 0; 
+  margin-bottom: 0; /* Remove bottom margin here since flex gap handles spacing */
+}
+
+@media (min-width: 400px) {
+  .food-selection-box {
+      flex-direction: row;
+  }
+}
+
+.add-item-button {
+  background-color: #007bff; /* Primary action blue */
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.add-item-button:hover {
+  background-color: #0056b3;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+
+.input-group label {
+  flex-basis: 100px;
+  min-width: 80px;
+  font-weight: 500;
+  color: #333;
+  flex-shrink: 1;
+}
+
+.input-group input[type="text"] {
+  flex-grow: 1;
+  width: auto;
+  margin-bottom: 0;
+}
+
+.meal-items-preview {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #ffffff;
+}
+
+.meal-items-preview h4 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #555;
+  font-size: 1.1rem;
+  border-bottom: 2px dotted #f0f0f0;
+}
+
+.meal-items-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.meal-preview-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0; 
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.item-details {
+  flex-grow: 1;
+  font-weight: 500;
+}
+
+.remove-item-button {
+  background-color: #4a86f7; /* Matching blue */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-left: 10px;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.add-meal-button {
+  width: 100%;
+  background-color: #28a745; /* Green for final action/save */
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-top: 25px;
+  transition: background-color 0.2s;
+}
+
+.add-meal-button:hover {
+  background-color: #218838;
+}
+
+.meal-summary-footer {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 2px solid #e0e0e0; /* Separates the list from the total */
+  text-align: right; /* Aligns the total to the right for better readability */
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.meal-summary-footer strong {
+  color: #28a745; /* Green color to highlight the final result */
+}
+
+
+.macro-grid {
+  display: flex; /* Flexbox to keep macros side-by-side */
+  justify-content: space-between;
+  background-color: #f9fbfd;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.macro-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.macro-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #777;
+  font-weight: bold;
+}
+
+.macro-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.food-list {
+  font-family: 'Segoe UI';
+  flex: 1;
+  padding: 20px;
+  background-color: #f9fbfd; /* Your requested background color */
+  border-radius: 12px;
+  max-height: 85vh;        /* Keeps the list scrollable */
+  overflow-y: auto;
+}
+
+food-list h3 {
+  color: #334155;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.food-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  border: 1px solid #e2e8f0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.food-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.food-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+
+.food-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #1e293b;
+}
+
+.food-stats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  justify-content: center;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background-color: #dcfce7; /* Very light green background */
+  color: #15803d;            /* Dark green text for high contrast */
+  border: 1px solid #bbf7d0;
+}
+
+.badge-calories {
+  background-color: #22c55e;
+  color: white;
+  border: none;
+}
+
+.no-food-message {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 20px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+}
+
+.action-control {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+  align-items: center;
+  margin-left: 15px;
+}
+
+.edit-button {
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.delete-button {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.Toastify__toast--success {
+  background: #dcfce7 !important;
+  color: #15803d !important;
+  border: 1px solid #bbf7d0;
+}
+
+
+.Toastify__toast--info {
+  background: #f9fbfd !important;
+  color: #1e293b !important;
+}
