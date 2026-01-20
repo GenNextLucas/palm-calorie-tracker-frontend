@@ -353,3 +353,71 @@ food-list h3 {
   background: #f9fbfd !important;
   color: #1e293b !important;
 }
+
+
+.custom-modal-dialog {
+  padding: 0;
+  border: none; /* Forces removal of the default black border */
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 400px;
+  overflow: hidden; /* Ensures content stays inside rounded corners */
+}
+
+/* 2. Style the blurred background */
+.custom-modal-dialog::backdrop {
+  background: rgba(15, 23, 42, 0.5); /* Dark semi-transparent color */
+  backdrop-filter: blur(8px); /* The "elegant" blur effect */
+}
+
+/* 3. Layout inside the modal */
+.modal-container {
+  padding: 32px;
+  text-align: center;
+}
+
+.modal-title {
+  margin: 0 0 12px 0;
+  font-size: 1.5rem;
+  color: #111827;
+  font-weight: 700;
+}
+
+.modal-text {
+  color: #4b5563;
+  line-height: 1.5;
+  margin-bottom: 32px;
+}
+
+/* 4. Button Styling */
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn-secondary {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}

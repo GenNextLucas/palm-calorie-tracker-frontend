@@ -31,3 +31,20 @@ export const updateFood = async (food) => {
 
     return response.json();
 }
+
+
+export const deleteFood = async (id) => {
+    const response = await fetch(`${API_URL}/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to delete the item');
+    }
+
+    return await response.json();
+};
