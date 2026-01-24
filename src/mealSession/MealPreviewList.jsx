@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 function MealPreviewList({ mealName, mealFoods, onSelectedFoodDelete }) {
-    console.log('meal foods ', mealFoods);
-
     const handleRemoveFood = (foodId) => {
         onSelectedFoodDelete(foodId);
         console.log('todo remove food id ', foodId);

@@ -1,28 +1,29 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import FoodList from './FoodList';
 import FoodInputForm from './FoodInputForm';
 import { CustomModal } from '../general/CustomModal';
-import { getFoods, createFood, updateFood, deleteFood } from '../api/foodApi';
+import { fetchFoods, removeFood, addFood, editFood } from '../store/foodSlice';
 import { toast } from 'react-toastify';
 import '../App.css';
 
 function FoodListPage() {
+    const dispatch  = useDispatch();
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [foodIdDelete, setFoodIdDelete] = useState(null);
-    const [foodItems, setFoodItems] = useState([]);
     const[food, setFood] = useState({});
+
+    const foodItems = useSelector((state) => state.foods.items);
     
       useEffect(() => {
-        getFoods()
-            .then(data => setFoodItems(data))
-            .catch(err => console.error(err));
-      }, []);
+        dispatch(fetchFoods())
+      }, [dispatch]);
     
     
       const handleAddFood = async (newItem) => {
         try {
-          const savedFood = await createFood(newItem);
-          setFoodItems((prevItems) => [...prevItems, savedFood]);
+          await dispatch(addFood(newItem)).unwrap();
           toast.success(`${newItem.name} added successfully!`);
         } catch (error) {
           toast.error('Error adding food: ' + error.message);
@@ -36,9 +37,8 @@ function FoodListPage() {
       
       const handleDeleteFood = async () => {
         try {
-          const response = await deleteFood(foodIdDelete);
-          debugger;
-          setFoodItems(foodItems.filter(item => item.id !== foodIdDelete));
+          const response = await dispatch(removeFood(foodIdDelete)).unwrap();
+          
           setFoodIdDelete(null);
           setIsModalOpen(false);
           toast.success(response.message);
@@ -55,9 +55,7 @@ function FoodListPage() {
     
       const handleFoodEdit = async (food) => {
         try {
-          const updatedFood = await updateFood(food);
-          const filteredFoods = foodItems.filter(item => item.id !== food.id);    
-          setFoodItems([...filteredFoods, updatedFood]);
+          await dispatch(editFood(food)).unwrap();
           setFood({});
           toast.success(`food updated successfully!`);
         } catch(error) {

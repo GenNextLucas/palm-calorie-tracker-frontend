@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import MealForm from './MealForm';
 import MealPreviewList from './MealPreviewList';
 import '../App.css';
 
 
-function MealPage({ foodList, onAddMeal }) {
+function MealPage() {
+    const fullState = useSelector((state) => state);
+    const foodList = useSelector((state) => state.foods.items);
+    
+    console.log("Full Redux State:", fullState);
+    console.log("MealPage foodList:", foodList);
+    
     const [selectedFoods, setSelectedFoods] = useState([]);
     const [mealName, setMealName] = useState('');
 
