@@ -1,8 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import foodReducer from './foodSlice';
+import mealReducer from './mealSlice';
+
 
 export const store = configureStore({
     reducer: {
-        foods: foodReducer, // Access this via state.foods in components
+        foods: foodReducer,
+        meals: mealReducer
     }
 });

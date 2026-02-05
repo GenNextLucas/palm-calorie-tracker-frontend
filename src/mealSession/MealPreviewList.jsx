@@ -16,7 +16,7 @@ function MealPreviewList({ mealName, mealFoods, onSelectedFoodDelete }) {
     }, { calories: 0, protein: 0, carbs: 0, fat: 0 });
     
     return (
-        <div>
+      <>
          {mealFoods.length > 0 && (
          <div className="meal-items-preview">
              <h4>Items in {mealName || 'New Meal'} ({mealFoods.length}):</h4>
@@ -61,7 +61,7 @@ function MealPreviewList({ mealName, mealFoods, onSelectedFoodDelete }) {
              </div>
 
           </div>) }
-        </div>
+          </>
     );
     
 

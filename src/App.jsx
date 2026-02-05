@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import FoodListPage from './foodSession/FoodListPage';
 import MealPage from './mealSession/MealPage';
+import Navbar from './general/Navbar';
 
 
 
@@ -13,11 +14,9 @@ function App() {
 
   return (
     <Router>
+        <Navbar />
         <div className="app-container">
-          <h1>Food Session</h1>
-
           <ToastContainer position='bottom-right' autoClose={3000} />
-          
           <Routes>
             <Route
              path="/"

@@ -65,6 +65,8 @@ function FoodListPage() {
     
     
     return (
+      <div>
+        <h1>Food Session</h1>
         <div className='food-page-container'>
             <FoodInputForm 
                 onAddFood={handleAddFood} 
@@ -84,7 +86,7 @@ function FoodListPage() {
               onCancel={() => setIsModalOpen(false)}
               />
         </div>
-
+        </div>
     );
 }
 

@@ -5,22 +5,18 @@ function MealForm({onMealNameChange, onAddMeal, mealName, foodList, onAddSelecte
     const [quantity, setQuantity] = useState('');
 
     const handleFoodSubmitSelection = () => {
-      debugger;
       const selectedFood = foodList.find(food => food.id === parseInt(selectedFoodId));
       const parsedQuantity = parseFloat(quantity);
       const scaleFactor = selectedFood.refVal > 0 ? parsedQuantity / selectedFood.refVal : 0;
-      debugger;
 
       const foodInstance = {
         // Unique ID for this instance
         id: Date.now(),
         name: selectedFood.name,
-        // Calculate scaled nutrients
         calories: Math.round(selectedFood.calories * scaleFactor),
         carbs: Math.round(selectedFood.carbs * scaleFactor * 10) / 10,
         protein: Math.round(selectedFood.protein * scaleFactor * 10) / 10,
         fat: Math.round(selectedFood.fat * scaleFactor * 10) / 10,
-        // Store quantity and unit for display
         quantity: parsedQuantity,
         unit: selectedFood.unit,
         originalFoodId: selectedFood.id,
