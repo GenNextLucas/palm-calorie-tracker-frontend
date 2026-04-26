@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
-function MealPreviewList({ mealName, mealFoods, onSelectedFoodDelete }) {
+function MealPreviewList({ mealName, mealFoods, onSelectedFoodDelete, onUpdateFoodQuantity, editingFoodId, setEditingFoodId }) {
+    const [tempQty, setTempQty] = useState('');
+    
+    const startEditing = (food) => {
+      debugger;
+      setEditingFoodId(food.id);
+      setTempQty(food.quantity);
+    };
+  
     const handleRemoveFood = (foodId) => {
         onSelectedFoodDelete(foodId);
         console.log('todo remove food id ', foodId);
@@ -21,20 +29,37 @@ function MealPreviewList({ mealName, mealFoods, onSelectedFoodDelete }) {
          <div className="meal-items-preview">
              <h4>Items in {mealName || 'New Meal'} ({mealFoods.length}):</h4>
              <ul className="meal-items-list">
-                {mealFoods.map(food => (
-                  <li key={food.id} className="meal-preview-item">
-                    <span className="item-details">
-                        {food.name}: {food.quantity}{food.unit} ({food.calories} kcal)
-                    </span>
-                    <button 
-                       className="remove-item-button"
-                       onClick={() => handleRemoveFood(food.id)}
-                       title="Remove item">
-                       X
-                   </button>
+             {mealFoods.map(food => (
+                <li key={food.id} className="meal-preview-item">
+                    {editingFoodId === food.id ? (
+                                       
+                        <div className="edit-quantity-form">
+                            <span className="edit-label"><strong>{food.name}:</strong></span>
+                            <input
+                                className="edit-qty-input" 
+                                type="number" 
+                                value={tempQty} 
+                                onChange={(e) => setTempQty(e.target.value)} 
+                            />
+                            <button onClick={() => onUpdateFoodQuantity(food.id, tempQty)}>✅</button>
+                        </div>
+                    ) : (
+                        <span className="item-details">
+                            {food.name}: {food.quantity}{food.unit} ({food.calories} kcal)
+                        </span>
+                    )}
+
+                    {!editingFoodId && (
+                        <div className="item-actions">
+                            <button onClick={() => startEditing(food)} title="Edit Quantity">✏️</button>
+                            <button className="remove-item-button" onClick={() => handleRemoveFood(food.id)} title="Remove item">
+                              X
+                            </button>
+                        </div>
+                    )}
                   </li>
-             ))}
-           </ul>
+                ))}
+             </ul>
 
              <div className='meal-summary-footer'>
                   <div className="total-calories">

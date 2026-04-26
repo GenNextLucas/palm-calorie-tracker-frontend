@@ -1,48 +1,77 @@
+import '../App.css';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MealForm from './MealForm';
 import MealPreviewList from './MealPreviewList';
-import '../App.css';
+import MealHistoryList from './MealHistoryList';
 import { toast } from 'react-toastify';
-import { addMeal, fetchMeals } from '../store/mealSlice';
+import { addMeal, fetchMeals, clearSelectedMeal, updateMeal } from '../store/mealSlice';
 import { fetchFoods } from '../store/foodSlice';
 
 
 function MealPage() {
     const dispatch = useDispatch();
 
+    const { selectedMeal } = useSelector((state) => state.meals);
     const foodList = useSelector((state) => state.foods.items);
     
     const [selectedFoods, setSelectedFoods] = useState([]);
     const [mealName, setMealName] = useState('');
+    const [showHistory, setShowHistory] = useState(false);
+
+    const [editingFoodId, setEditingFoodId] = useState(null);
+    const [newQuantity, setNewQuantity] = useState('');
+
+    const handleUpdateQuantity = (foodId, newQty) => {
+      debugger;
+      setSelectedFoods(prev => prev.map(item => 
+          item.id === foodId ? { ...item, quantity: Number(newQty) } : item
+      ));
+      setEditingFoodId(null); // Exit edit mode
+    };
+
 
     useEffect(() => {
       dispatch(fetchMeals())
-      debugger;
       
       if (foodList.length === 0) {
         dispatch(fetchFoods())
       }
     }, [dispatch]);
 
+    useEffect(() => {
+      if (selectedMeal) {
+        setMealName(selectedMeal.name);
+        setSelectedFoods(selectedMeal.items); 
+      }
+    }, [selectedMeal]);
+
     const handleSubmit = async () => {
       const mealData = {
+        ...(selectedMeal && {id: selectedMeal.id}),
         name: mealName || "New Meal",
         items: selectedFoods.map(item => ({
-          id: item.originalFoodId, // Mapping back to the Food ID
+          id: item.id || item.originalFoodId, // Mapping back to the Food ID
           name: item.name,
           calories: item.calories,
           protein: item.protein,
           carbs: item.carbs,
           fat: item.fat,
           quantity: item.quantity,
-          uom: item.unit
+          uom: item.uom || item.unit
         }))
       };
 
       try {
-        await dispatch(addMeal(mealData)).unwrap();
-        toast.success(`the meal ${mealName} was successfully`);
+        if (selectedMeal) {
+          await dispatch(updateMeal({id: selectedMeal.id, mealData } )).unwrap();
+          dispatch(clearSelectedMeal());
+          toast.success(`The meal ${mealName} was updated successfully!`);
+        } else {
+          await dispatch(addMeal(mealData)).unwrap();
+          toast.success(`the meal ${mealName} was added successfully`);
+        }
+
         setSelectedFoods([]);
         setMealName('');
       } catch (error) {
@@ -63,19 +92,43 @@ function MealPage() {
     }
 
     return(
-       <div>
-         <h1>Log your meals</h1>
-          <div className="page-container">
-              <MealForm 
-                 onAddMeal={() => {}} 
-                 onMealNameChange={handleMealNameChange} 
-                 mealName={mealName} 
-                 foodList={foodList} 
-                 onAddSelectedFood={addSelectedFoods}/>
-              <MealPreviewList mealName={mealName} mealFoods={selectedFoods} onSelectedFoodDelete={handleDeleteFoods} />
-              <button className='add-meal-button' onClick={handleSubmit}>Add Meal</button>
-          </div>
+      <div className="meal-page-layout">
+        <div className="button-group">
+          {!showHistory && (
+            <button className="add-diet-schedule-btn" onClick={() => setShowHistory(true)}>
+              Add Diet Schedule
+            </button>
+          )}
         </div>
+  
+      <div className={`content-wrapper ${showHistory ? 'history-open' : ''}`}>
+        
+        <div className="form-section">
+          <h1>Log your meals</h1>
+          <MealForm 
+             onMealNameChange={handleMealNameChange} 
+             mealName={mealName} 
+             foodList={foodList} 
+             onAddSelectedFood={addSelectedFoods} 
+          />
+          <MealPreviewList 
+             mealName={mealName} 
+             mealFoods={selectedFoods} 
+             onSelectedFoodDelete={handleDeleteFoods}
+             onUpdateFoodQuantity={handleUpdateQuantity} // New prop
+             editingFoodId={editingFoodId}
+             setEditingFoodId={setEditingFoodId}
+          />
+          <button className='add-meal-button' onClick={handleSubmit}>{selectedMeal ? 'Update Meal' : 'Add Meal'}</button>
+        </div>
+  
+        {showHistory && (
+          <div className="history-section-sidebar">
+            <MealHistoryList onClose={() => setShowHistory(false)} />
+          </div>
+        )}
+       </div>
+     </div>
     );
 }
 

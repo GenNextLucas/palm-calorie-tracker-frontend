@@ -53,6 +53,54 @@ body {
   max-width: 550px;
 }
 
+.item-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.item-actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  /* Optional: add styles to make buttons uniform */
+}
+
+
+
+.edit-quantity-form {
+  display: flex;
+  align-items: center; /* Vertically centers label, input, and button */
+  gap: 8px;           /* Adds space between elements */
+  height: 40px;
+}
+
+
+.meal-items-preview .edit-qty-input {
+  width: 60px; 
+  height: 100%; /* Matching the button height */
+  padding: 0 5px;
+  border: 1px solid #ccc;
+  margin: 0;
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensures width/padding are consistent */
+}
+
+.edit-quantity-form button {
+  height: 100%;        /* Takes full height of the container */
+  padding: 0 12px;     /* Adjust width via padding */
+  cursor: pointer;
+  margin: 0;
+  display: flex;
+  align-items: center; /* Centers the icon inside the button */
+  justify-content: center;
+}
+
+.edit-label {
+  white-space: nowrap; /* Prevents the label from wrapping to a new line */
+}
+
 .food-list {
   font-family: 'Segoe UI';
   padding: 20px;
@@ -465,4 +513,155 @@ select:focus {
 
 .nav-links a:hover {
   color: #0056b3;
+}
+
+/*
+  Meal history components CSS
+*/
+
+.history-overlay {
+  position: fixed; /* 'fixed' keeps it over everything even if you scroll */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Perfectly centers the container */
+  width: 90%;
+  max-width: 700px; /* Limits the width on desktop */
+  max-height: 80vh; /* Limits height to 80% of the screen */
+  background: #f8f9fa;
+  z-index: 1000; 
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  overflow-y: auto; /* Scroll inside the modal if the list is long */
+  border: 1px solid #ddd;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 1rem;
+}
+
+.overlay-split-content {
+  display: flex;
+  gap: 15px;
+  height: calc(100% - 60px); /* Adjust based on header height */
+}
+
+.history-column-mini {
+  flex: 1;
+  max-width: 350px; /* Limits the width of the cards */
+  height: 60vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 10px;
+  
+}
+
+.history-column-mini::-webkit-scrollbar {
+  width: 6px;
+}
+
+.history-column-mini::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+.meal-card-mini {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.mini-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.mini-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.mini-badge {
+  font-size: 0.75rem;
+  background: #e3f2fd;
+  color: #0d47a1;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+.mini-foods {
+  font-size: 0.8rem;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Keeps names from breaking the layout */
+  margin: 5px 0;
+}
+
+
+.mini-macros {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-top: 8px;
+  border-top: 1px solid #f5f5f5;
+  padding-top: 8px;
+}
+
+.p-dot { color: #d32f2f; }
+.c-dot { color: #388e3c; }
+.f-dot { color: #f57c00; }
+
+
+
+
+.content-wrapper {
+  display: flex;
+  transition: all 0.5s ease-in-out; /* Smooth transition when opening */
+  width: 100%;
+  gap: 0;
+}
+
+
+.form-section {
+  flex: 1;
+  transition: all 0.5s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.history-open .form-section {
+  flex: 0.6; /* Form takes 60% of the screen */
+  transform: translateX(-20px); /* Subtle shift to the left */
+}
+
+
+.history-section-sidebar {
+  flex: .9; /* History/Calendar takes 140% of the remaining space */
+  animation: slideInRight 0.5s forwards;
+  background: white;
+  border-left: 2px solid #eee;
+  padding: 20px;
+  height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(900px); }
+  to { opacity: 1; transform: translateX(0); }
 }
