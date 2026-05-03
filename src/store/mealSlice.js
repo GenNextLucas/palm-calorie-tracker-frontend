@@ -46,13 +46,9 @@ const mealSlice = createSlice({
             state.loading = false;
         })
         .addCase(updateMeal.fulfilled, (state, action) => {
-            debugger;
-
             const updatedMeal = action.payload;
     
             const index = state.items.findIndex((item) => item.id === updatedMeal.id);
-            
-            debugger;
 
             if (index !== -1) {
                 state.items[index] = updatedMeal;

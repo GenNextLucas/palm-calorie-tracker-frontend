@@ -23,12 +23,33 @@ function MealPage() {
     const [newQuantity, setNewQuantity] = useState('');
 
     const handleUpdateQuantity = (foodId, newQty) => {
-      debugger;
-      setSelectedFoods(prev => prev.map(item => 
-          item.id === foodId ? { ...item, quantity: Number(newQty) } : item
-      ));
-      setEditingFoodId(null); // Exit edit mode
+      const parsedQuantity = Number(newQty);
+      
+    // 1. Find the item and the base data first
+    const targetItem = selectedFoods.find(item => item.id === foodId);
+    if (!targetItem) return;
+
+    const baseFood = foodList.find(f => f.id === (targetItem.originalFoodId || targetItem.id));
+    if (!baseFood) return;
+
+    // 2. Prepare the calculated values
+    const scaleFactor = parsedQuantity / baseFood.refVal;
+    
+    const updatedMacros = {
+        calories: Math.round(baseFood.calories * scaleFactor),
+        protein: Math.round(baseFood.protein * scaleFactor * 10) / 10,
+        carbs: Math.round(baseFood.carbs * scaleFactor * 10) / 10,
+        fat: Math.round(baseFood.fat * scaleFactor * 10) / 10,
     };
+      
+    setSelectedFoods(prev => prev.map(item => 
+      item.id === foodId 
+          ? { ...item, quantity: parsedQuantity, ...updatedMacros } 
+          : item
+    ));
+    
+    setEditingFoodId(null); // Exit edit mode
+  };
 
 
     useEffect(() => {

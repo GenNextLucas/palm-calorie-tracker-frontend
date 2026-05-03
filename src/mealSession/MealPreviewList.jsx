@@ -4,7 +4,6 @@ function MealPreviewList({ mealName, mealFoods, onSelectedFoodDelete, onUpdateFo
     const [tempQty, setTempQty] = useState('');
     
     const startEditing = (food) => {
-      debugger;
       setEditingFoodId(food.id);
       setTempQty(food.quantity);
     };

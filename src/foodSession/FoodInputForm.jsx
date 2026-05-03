@@ -45,7 +45,6 @@ function FoodInputForm({ onAddFood, onEditFood, food }) {
         } else {
           if (foodName && calories && carbs && protein && fat && refVal && uom) {
             const newItem = {
-              id: 0,
               name: foodName,
               calories: parseFloat(calories),
               carbs: parseFloat(carbs),
